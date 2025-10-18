@@ -20,7 +20,12 @@ public class UsageController {
         String email = request.get("email");
         String sectionId = request.get("sectionId");
         
-        // Check if item already exists in top 3
+        // Skip tracking for overview
+        if ("overview".equals(sectionId)) {
+            return ResponseEntity.ok().build();
+        }
+        
+        // Check if item already exists in top 7
         UserUsage existing = userUsageRepository.findByEmailAndSectionId(email, sectionId).orElse(null);
         
         if (existing != null) {
@@ -28,10 +33,10 @@ public class UsageController {
             userUsageRepository.save(existing);
         } else {
             // Get current favorites count
-            List<UserUsage> currentFavorites = userUsageRepository.findTop3ByEmailOrderByUsageCountDesc(email);
+            List<UserUsage> currentFavorites = userUsageRepository.findTop7ByEmailOrderByUsageCountDesc(email);
             
-            if (currentFavorites.size() < 3) {
-                // Add new item if less than 3
+            if (currentFavorites.size() < 7) {
+                // Add new item if less than 7
                 userUsageRepository.save(new UserUsage(email, sectionId, 1));
             } else {
                 // Replace least used item
@@ -46,7 +51,11 @@ public class UsageController {
     
     @GetMapping("/favorites/{email}")
     public ResponseEntity<List<UserUsage>> getFavorites(@PathVariable String email) {
-        List<UserUsage> favorites = userUsageRepository.findTop3ByEmailOrderByUsageCountDesc(email);
+        List<UserUsage> favorites = userUsageRepository.findTop7ByEmailOrderByUsageCountDesc(email);
+        // Limit to 7 items
+        if (favorites.size() > 7) {
+            favorites = favorites.subList(0, 7);
+        }
         return ResponseEntity.ok(favorites);
     }
 }

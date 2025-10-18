@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface UserUsageRepository extends JpaRepository<UserUsage, Long> {
     Optional<UserUsage> findByEmailAndSectionId(String email, String sectionId);
     
-    @Query("SELECT u FROM UserUsage u WHERE u.email = ?1 ORDER BY u.usageCount DESC")
-    List<UserUsage> findTop3ByEmailOrderByUsageCountDesc(String email);
+    @Query("SELECT u FROM UserUsage u WHERE u.email = ?1 AND u.sectionId != 'overview' ORDER BY u.usageCount DESC")
+    List<UserUsage> findTop7ByEmailOrderByUsageCountDesc(String email);
 }
