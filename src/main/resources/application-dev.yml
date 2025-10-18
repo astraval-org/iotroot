@@ -1,0 +1,22 @@
+spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      - org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
+
+server:
+  port: 8080
+
+mqtt:
+  broker:
+    url: tcp://astraval.com:1883
+    username: testuser
+    password: iet25
+    client-id: iotroot-backend
+    topic: test/topic
+
+logging:
+  level:
+    root: WARN
+    com.astraval.iotroot: INFO
