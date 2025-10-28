@@ -5,10 +5,8 @@ spring:
     datasource:
         url: jdbc:postgresql://203.57.85.21:5432/iotroot?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
         driver-class-name: org.postgresql.Driver
-        username: iotrootuser
-        password: IOTROOT25@db
-        hikari:
-            connection-init-sql: SET TIME ZONE 'UTC'
+        username: iotroot_app
+        password: av2025@IOTROOT
     jpa:
         hibernate:
             ddl-auto: update
@@ -22,10 +20,11 @@ spring:
 mqtt:
     broker:
         url: tcp://astraval.com:1883
-        username: user1
+        username: testuser
         password: password1
-        client-id: iotroot-backend
-        topic: test/topic
+        client-id: iotroot_app
+        topic: iotroot
+                
 
 logging:
     level:
