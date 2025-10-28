@@ -19,13 +19,18 @@ spring:
 
 mqtt:
     broker:
-        url: tcp://astraval.com:1883
+        url: tcp://astraval.com:1883   # ssl://astraval.com:8883
         username: testuser
         password: password1
         client-id: iotroot_app
-        topic: iotroot
-                
-
+        tclient-id: iotroot_backend_${random.uuid} # ✅ Unique Client ID
+        clean-session: false
+        keep-alive: 60
+        connection-timeout: 30
+        automatic-reconnect: true
+        topic: iotroot/#
+        
+        
 logging:
     level:
         root: WARN
