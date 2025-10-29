@@ -23,7 +23,7 @@ mqtt:
         username: testuser
         password: password1
         client-id: iotroot_app
-        tclient-id: iotroot_backend_${random.uuid} # ✅ Unique Client ID
+        tclient-id: iotroot_backend_${random.uuid} 
         clean-session: false
         keep-alive: 60
         connection-timeout: 30
