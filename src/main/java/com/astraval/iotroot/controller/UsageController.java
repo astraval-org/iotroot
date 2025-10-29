@@ -4,6 +4,7 @@ import com.astraval.iotroot.model.UserUsage;
 import com.astraval.iotroot.repo.UserUsageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
@@ -17,35 +18,7 @@ public class UsageController {
     
     @PostMapping("/track")
     public ResponseEntity<?> trackUsage(@RequestBody Map<String, String> request) {
-        String email = request.get("email");
-        String sectionId = request.get("sectionId");
-        
-        // Skip tracking for overview
-        if ("overview".equals(sectionId)) {
-            return ResponseEntity.ok().build();
-        }
-        
-        // Check if item already exists in top 7
-        UserUsage existing = userUsageRepository.findByEmailAndSectionId(email, sectionId).orElse(null);
-        
-        if (existing != null) {
-            existing.setUsageCount(existing.getUsageCount() + 1);
-            userUsageRepository.save(existing);
-        } else {
-            // Get current favorites count
-            List<UserUsage> currentFavorites = userUsageRepository.findTop7ByEmailOrderByUsageCountDesc(email);
-            
-            if (currentFavorites.size() < 7) {
-                // Add new item if less than 7
-                userUsageRepository.save(new UserUsage(email, sectionId, 1));
-            } else {
-                // Replace least used item
-                UserUsage leastUsed = currentFavorites.get(currentFavorites.size() - 1);
-                userUsageRepository.delete(leastUsed);
-                userUsageRepository.save(new UserUsage(email, sectionId, 1));
-            }
-        }
-        
+        // Temporarily disabled to prevent concurrency errors
         return ResponseEntity.ok().build();
     }
     
