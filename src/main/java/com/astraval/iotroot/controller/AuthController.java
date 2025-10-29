@@ -37,8 +37,10 @@ public Map<String, Object> login(@RequestBody User user) {
     try {
         User authenticatedUser = authService.authenticate(user.getEmail(), user.getPassword());
         if (authenticatedUser != null) {
+            String token = authService.generateToken(authenticatedUser);
             return Map.of(
                 "success", true, 
+                "token", token,
                 "userId", authenticatedUser.getUserId(), 
                 "email", authenticatedUser.getEmail(),
                 "username", authenticatedUser.getUsername() != null ? authenticatedUser.getUsername() : authenticatedUser.getEmail(),
@@ -48,6 +50,19 @@ public Map<String, Object> login(@RequestBody User user) {
         return Map.of("success", false, "message", "Invalid email or password");
     } catch (Exception e) {
         return Map.of("success", false, "message", "Login failed: " + e.getMessage());
+    }
+}
+
+@PostMapping("/validate")
+public Map<String, Object> validateToken(@RequestHeader("Authorization") String authHeader) {
+    try {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+            return authService.validateToken(token);
+        }
+        return Map.of("valid", false, "message", "No token provided");
+    } catch (Exception e) {
+        return Map.of("valid", false, "message", "Invalid token");
     }
 }
 
