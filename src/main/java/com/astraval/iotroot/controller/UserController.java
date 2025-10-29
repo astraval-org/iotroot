@@ -3,6 +3,7 @@ package com.astraval.iotroot.controller;
 import com.astraval.iotroot.model.User;
 import com.astraval.iotroot.service.UserService;
 import org.springframework.web.bind.annotation.*;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
@@ -16,7 +17,9 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAll() {
+    public List<User> getAll(HttpServletRequest request) {
+        // JWT filter already validated token and set user info
+        String userId = (String) request.getAttribute("userId");
         return service.getAll();
     }
 }
