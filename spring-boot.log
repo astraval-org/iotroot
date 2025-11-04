@@ -1,0 +1,41 @@
+Starting a Gradle Daemon, 1 busy and 3 incompatible Daemons could not be reused, use --status for details
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :resolveMainClassName
+
+> Task :bootRun
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.5)
+
+2025-11-04T16:53:37.709Z  INFO 59935 --- [           main] c.astraval.iotroot.IotrootApplication    : Starting IotrootApplication using Java 21.0.9 with PID 59935 (/Users/karthikeyana/workspace/AV/iotroot/build/classes/java/main started by karthikeyana in /Users/karthikeyana/workspace/AV/iotroot)
+2025-11-04T16:53:37.710Z  INFO 59935 --- [           main] c.astraval.iotroot.IotrootApplication    : No active profile set, falling back to 1 default profile: "default"
+2025-11-04T16:53:41.035Z  INFO 59935 --- [           main] c.astraval.iotroot.service.MqttService   : Connecting to MQTT broker: tcp://astraval.com:1883
+2025-11-04T16:53:41.921Z  INFO 59935 --- [           main] c.astraval.iotroot.service.MqttService   : Successfully connected to MQTT broker
+2025-11-04T16:53:42.046Z  INFO 59935 --- [           main] c.astraval.iotroot.service.MqttService   : Subscribed to topic: iet/#
+2025-11-04T16:53:42.188Z  INFO 59935 --- [           main] c.astraval.iotroot.IotrootApplication    : Started IotrootApplication in 4.616 seconds (process running for 4.714)
+2025-11-04T16:55:25.644Z  WARN 59935 --- [TT Rec: client1] c.astraval.iotroot.service.MqttService   : MQTT connection lost: Connection lost
+
+> Task :bootRun FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':bootRun'.
+> Process 'command '/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin/java'' finished with non-zero exit value 137
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 2m 16s
+4 actionable tasks: 2 executed, 2 up-to-date

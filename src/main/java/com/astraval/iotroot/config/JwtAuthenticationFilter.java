@@ -18,7 +18,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     
     private final List<String> excludedPaths = Arrays.asList(
         "/api/auth/login",
-        "/api/auth/register"
+        "/api/auth/register",
+        "/api/favorites"
     );
 
     public JwtAuthenticationFilter(JwtUtil jwtUtil) {
@@ -32,7 +33,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
         
         // Skip JWT validation for excluded paths
-        if (excludedPaths.contains(path)) {
+        if (excludedPaths.contains(path) || path.startsWith("/api/favorites")) {
             filterChain.doFilter(request, response);
             return;
         }
