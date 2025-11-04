@@ -55,4 +55,15 @@ public boolean validate(String email, String rawPassword) {
                    .filter(u -> encoder.matches(rawPassword, u.getPassword()))
                    .orElse(null);
     }
+    
+    public User findByEmail(String email) {
+        return repo.findByEmail(email).orElse(null);
+    }
+    
+    public User save(User user) {
+        if (user.getUserId() == null) {
+            user.setUserId("user" + UUID.randomUUID().toString().replace("-", "").substring(0, 8));
+        }
+        return repo.save(user);
+    }
 }

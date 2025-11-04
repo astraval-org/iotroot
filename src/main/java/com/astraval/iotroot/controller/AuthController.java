@@ -66,4 +66,35 @@ public Map<String, Object> validateToken(@RequestHeader("Authorization") String 
     }
 }
 
+@PostMapping("/google")
+public Map<String, Object> googleAuth(@RequestBody Map<String, String> request) {
+    try {
+        String email = request.get("email");
+        String name = request.get("name");
+        String googleId = request.get("googleId");
+        
+        // Check if user exists, if not create new user
+        User user = userService.findByEmail(email);
+        if (user == null) {
+            user = new User();
+            user.setEmail(email);
+            user.setUsername(name);
+            user.setPassword(""); // No password for Google users
+            user = userService.save(user);
+        }
+        
+        String token = authService.generateToken(user);
+        return Map.of(
+            "success", true,
+            "token", token,
+            "userId", user.getUserId(),
+            "email", user.getEmail(),
+            "username", user.getUsername() != null ? user.getUsername() : user.getEmail(),
+            "message", "Google login successful"
+        );
+    } catch (Exception e) {
+        return Map.of("success", false, "message", "Google login failed: " + e.getMessage());
+    }
+}
+
 }
