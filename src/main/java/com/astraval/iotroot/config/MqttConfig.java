@@ -11,6 +11,10 @@ public class MqttConfig {
     private String password;
     private String clientId;
     private String topic;
+    private boolean cleanSession;
+    private int keepAlive;
+    private int connectionTimeout;
+    private boolean automaticReconnect;
 
     public String getUrl() { return url; }
     public void setUrl(String url) { this.url = url; }
@@ -26,4 +30,16 @@ public class MqttConfig {
 
     public String getTopic() { return topic; }
     public void setTopic(String topic) { this.topic = topic; }
+
+    public boolean isCleanSession() { return cleanSession; }
+    public void setCleanSession(boolean cleanSession) { this.cleanSession = cleanSession; }
+
+    public int getKeepAlive() { return keepAlive; }
+    public void setKeepAlive(int keepAlive) { this.keepAlive = keepAlive; }
+
+    public int getConnectionTimeout() { return connectionTimeout; }
+    public void setConnectionTimeout(int connectionTimeout) { this.connectionTimeout = connectionTimeout; }
+
+    public boolean isAutomaticReconnect() { return automaticReconnect; }
+    public void setAutomaticReconnect(boolean automaticReconnect) { this.automaticReconnect = automaticReconnect; }
 }

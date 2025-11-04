@@ -16,10 +16,10 @@ public interface UserUsageRepository extends JpaRepository<UserUsage, Long> {
     List<UserUsage> findTop7ByEmailOrderByUsageCountDesc(String email);
     
     @Modifying
-    @Query(value = "INSERT INTO user_recently_used_services (email, section_id, usage_count) VALUES (?1, ?2, 1) ON DUPLICATE KEY UPDATE usage_count = usage_count + 1", nativeQuery = true)
+    @Query(value = "INSERT INTO user_favourite_services (email, section_id, usage_count) VALUES (?1, ?2, 1) ON DUPLICATE KEY UPDATE usage_count = usage_count + 1", nativeQuery = true)
     void upsertUsage(String email, String sectionId);
     
     @Modifying
-    @Query(value = "DELETE FROM user_recently_used_services WHERE email = ?1 AND section_id != 'overview' ORDER BY usage_count ASC LIMIT 1", nativeQuery = true)
+    @Query(value = "DELETE FROM user_favourite_services WHERE email = ?1 AND section_id != 'overview' ORDER BY usage_count ASC LIMIT 1", nativeQuery = true)
     void deleteLeastUsed(String email);
 }

@@ -3,7 +3,7 @@ package com.astraval.iotroot.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "user_recently_used_services")
+@Table(name = "user_favourite_services")
 public class UserUsage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
