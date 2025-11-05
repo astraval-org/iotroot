@@ -20,12 +20,14 @@ spring:
 mqtt:
     broker:
         url: tcp://astraval.com:1883   # ssl://astraval.com:8883
-        username: user1
-        password: password1
-        client-id: client1
-        keep-alive: 60
-        connection-timeout: 30
+        username: user2
+        password: password2
+        client-id: client2
+        keep-alive: 120
+        connection-timeout: 60
         automatic-reconnect: true
+        max-inflight: 10
+        retry-interval: 5
         topic: iet/#
         clean-session: false
         
