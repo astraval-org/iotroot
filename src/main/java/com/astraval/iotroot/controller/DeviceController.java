@@ -48,14 +48,23 @@ public class DeviceController {
     @PutMapping("/{clientId}/topics")
     public ResponseEntity<Device> updateDeviceTopics(@PathVariable String clientId, @RequestBody Map<String, Object> request) {
         @SuppressWarnings("unchecked")
-        List<Map<String, String>> topics = (List<Map<String, String>>) request.get("topics");
+        List<Map<String, String>> publishTopics = (List<Map<String, String>>) request.get("publishTopics");
+        @SuppressWarnings("unchecked")
+        List<Map<String, String>> subscribeTopics = (List<Map<String, String>>) request.get("subscribeTopics");
         
-        if (topics == null || topics.isEmpty()) {
+        if (publishTopics == null && subscribeTopics == null) {
+            @SuppressWarnings("unchecked")
+            List<Map<String, String>> topics = (List<Map<String, String>>) request.get("topics");
+            publishTopics = topics;
+            subscribeTopics = topics;
+        }
+        
+        if (publishTopics == null || subscribeTopics == null) {
             return ResponseEntity.badRequest().build();
         }
         
         try {
-            Device device = deviceService.updateDeviceTopics(clientId, topics);
+            Device device = deviceService.updateDeviceTopics(clientId, publishTopics, subscribeTopics);
             return ResponseEntity.ok(device);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();

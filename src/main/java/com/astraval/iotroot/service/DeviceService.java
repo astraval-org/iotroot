@@ -51,15 +51,16 @@ public class DeviceService {
         return deviceRepository.save(device);
     }
     
-    public Device updateDeviceTopics(String clientId, List<Map<String, String>> topics) {
+    public Device updateDeviceTopics(String clientId, List<Map<String, String>> publishTopics, List<Map<String, String>> subscribeTopics) {
         List<Device> existingDevices = deviceRepository.findByClientId(clientId);
         
         if (existingDevices.isEmpty()) {
             throw new RuntimeException("Device not found");
         }
         
-        String topicsJson = convertTopicsToJson(topics);
-        deviceRepository.updateDeviceTopics(clientId, topicsJson);
+        String publishJson = convertTopicsToJson(publishTopics);
+        String subscribeJson = convertTopicsToJson(subscribeTopics);
+        deviceRepository.updateDeviceTopics(clientId, publishJson, subscribeJson);
         
         return deviceRepository.findByClientId(clientId).get(0);
     }

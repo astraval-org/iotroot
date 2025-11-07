@@ -17,8 +17,8 @@ public interface DeviceRepository extends JpaRepository<Device, DeviceId> {
     @Query("SELECT d FROM Device d WHERE d.clientId = :clientId")
     List<Device> findByClientId(@Param("clientId") String clientId);
     
-    @Query(value = "UPDATE vmq_auth_acl SET publish_acl = CAST(:topicsJson AS json), subscribe_acl = CAST(:topicsJson AS json) WHERE client_id = :clientId", nativeQuery = true)
+    @Query(value = "UPDATE vmq_auth_acl SET publish_acl = CAST(:publishJson AS json), subscribe_acl = CAST(:subscribeJson AS json) WHERE client_id = :clientId", nativeQuery = true)
     @Modifying
     @Transactional
-    void updateDeviceTopics(@Param("clientId") String clientId, @Param("topicsJson") String topicsJson);
+    void updateDeviceTopics(@Param("clientId") String clientId, @Param("publishJson") String publishJson, @Param("subscribeJson") String subscribeJson);
 }
