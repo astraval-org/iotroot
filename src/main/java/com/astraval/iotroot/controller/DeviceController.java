@@ -31,4 +31,17 @@ public class DeviceController {
         Device device = deviceService.createDevice(clientId);
         return ResponseEntity.ok(device);
     }
+    
+    @PutMapping("/{clientId}/auth")
+    public ResponseEntity<Device> updateDeviceAuth(@PathVariable String clientId, @RequestBody Map<String, String> request) {
+        String username = request.get("username");
+        String password = request.get("password");
+        
+        if (username == null || password == null || username.trim().isEmpty() || password.trim().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        
+        Device device = deviceService.updateDeviceAuth(clientId, username, password);
+        return ResponseEntity.ok(device);
+    }
 }

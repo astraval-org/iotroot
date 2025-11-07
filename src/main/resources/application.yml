@@ -1,38 +1,87 @@
-server:
-    port: 8080
-
 spring:
-    datasource:
-        url: jdbc:postgresql://203.57.85.21:5432/iotroot?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
-        driver-class-name: org.postgresql.Driver
-        username: iotroot_app
-        password: av2025@IOTROOT
-    jpa:
-        hibernate:
-            ddl-auto: none
-        show-sql: true
-        open-in-view: false
-        properties:
-            hibernate:
-                jdbc:
-                    time_zone: UTC
+  profiles:
+    active: development
+
+---
+spring:
+  config:
+    activate:
+      on-profile: development
+  datasource:
+    url: jdbc:postgresql://203.57.85.21:5432/iotroot?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
+    driver-class-name: org.postgresql.Driver
+    username: iotroot_app
+    password: av2025@IOTROOT
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+
+server:
+  port: 8080
 
 mqtt:
-    broker:
-        url: tcp://astraval.com:1883   # ssl://astraval.com:8883
-        username: user2
-        password: password2
-        client-id: client2
-        keep-alive: 120
-        connection-timeout: 60
-        automatic-reconnect: true
-        max-inflight: 10
-        retry-interval: 5
-        topic: iet/#
-        clean-session: false
-        
-        
+  broker:
+    url: tcp://astraval.com:1883
+    username: user1
+    password: password1
+    client-id: client1
+    keep-alive: 120
+    connection-timeout: 60
+    automatic-reconnect: true
+    max-inflight: 10
+    retry-interval: 5
+    topic: iet/#
+    clean-session: false
+
 logging:
-    level:
-        root: WARN
-        com.astraval.iotroot: INFO
+  level:
+    root: WARN
+    com.astraval.iotroot: INFO
+
+---
+spring:
+  config:
+    activate:
+      on-profile: production
+  datasource:
+    url: jdbc:postgresql://203.57.85.21:5432/iotroot?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
+    driver-class-name: org.postgresql.Driver
+    username: iotroot_app
+    password: av2025@IOTROOT
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+
+server:
+  port: 8080
+
+mqtt:
+  broker:
+    url: ssl://astraval.com:8883
+    username: user2
+    password: password2
+    client-id: client2
+    keep-alive: 120
+    connection-timeout: 60
+    automatic-reconnect: true
+    max-inflight: 10
+    retry-interval: 5
+    topic: iet/#
+    clean-session: false
+
+logging:
+  level:
+    root: ERROR
+    com.astraval.iotroot: WARN

@@ -32,3 +32,9 @@ test {
 bootRun {
     systemProperty 'user.timezone', 'UTC'
 }
+
+bootJar {
+    manifest {
+        attributes 'Spring-Boot-Active-Profiles': 'production'
+    }
+}
