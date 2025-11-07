@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -48,5 +49,28 @@ public class DeviceService {
         device.setSubscribeAcl(null);
         
         return deviceRepository.save(device);
+    }
+    
+    public Device updateDeviceTopics(String clientId, List<Map<String, String>> topics) {
+        List<Device> existingDevices = deviceRepository.findByClientId(clientId);
+        
+        if (existingDevices.isEmpty()) {
+            throw new RuntimeException("Device not found");
+        }
+        
+        String topicsJson = convertTopicsToJson(topics);
+        deviceRepository.updateDeviceTopics(clientId, topicsJson);
+        
+        return deviceRepository.findByClientId(clientId).get(0);
+    }
+    
+    private String convertTopicsToJson(List<Map<String, String>> topics) {
+        StringBuilder json = new StringBuilder("[");
+        for (int i = 0; i < topics.size(); i++) {
+            if (i > 0) json.append(", ");
+            json.append("{\"pattern\": \"").append(topics.get(i).get("pattern")).append("\"}");
+        }
+        json.append("]");
+        return json.toString();
     }
 }

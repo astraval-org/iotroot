@@ -26,10 +26,10 @@ public class Device {
     @Column(name = "password", length = 128)
     private String password;
     
-    @Column(name = "publish_acl", insertable = false, updatable = false)
+    @Column(name = "publish_acl", columnDefinition = "json")
     private String publishAcl;
     
-    @Column(name = "subscribe_acl", insertable = false, updatable = false)
+    @Column(name = "subscribe_acl", columnDefinition = "json")
     private String subscribeAcl;
     
     public Device() {}

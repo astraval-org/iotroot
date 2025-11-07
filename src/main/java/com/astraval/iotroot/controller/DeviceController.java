@@ -44,4 +44,21 @@ public class DeviceController {
         Device device = deviceService.updateDeviceAuth(clientId, username, password);
         return ResponseEntity.ok(device);
     }
+    
+    @PutMapping("/{clientId}/topics")
+    public ResponseEntity<Device> updateDeviceTopics(@PathVariable String clientId, @RequestBody Map<String, Object> request) {
+        @SuppressWarnings("unchecked")
+        List<Map<String, String>> topics = (List<Map<String, String>>) request.get("topics");
+        
+        if (topics == null || topics.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        
+        try {
+            Device device = deviceService.updateDeviceTopics(clientId, topics);
+            return ResponseEntity.ok(device);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
